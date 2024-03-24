@@ -1,1 +1,52 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <h1>Tic Tac Toe</h1>
+    <table border="1">
+        <tr>
+            <td><button onclick="makeMove(0)" id="cell0" class="{{ 'x' if board[0] == 'X' else 'o' if board[0] == 'O' else '' }}" {{ "disabled" if board[0] != ' ' or game_over else "" }}>{{ board[0] }}</button></td>
+            <td><button onclick="makeMove(1)" id="cell1" class="{{ 'x' if board[1] == 'X' else 'o' if board[1] == 'O' else '' }}" {{ "disabled" if board[1] != ' ' or game_over else "" }}>{{ board[1] }}</button></td>
+            <td><button onclick="makeMove(2)" id="cell2" class="{{ 'x' if board[2] == 'X' else 'o' if board[2] == 'O' else '' }}" {{ "disabled" if board[2] != ' ' or game_over else "" }}>{{ board[2] }}</button></td>
+        </tr>
+        <tr>
+            <td><button onclick="makeMove(3)" id="cell3" class="{{ 'x' if board[3] == 'X' else 'o' if board[3] == 'O' else '' }}" {{ "disabled" if board[3] != ' ' or game_over else "" }}>{{ board[3] }}</button></td>
+            <td><button onclick="makeMove(4)" id="cell4" class="{{ 'x' if board[4] == 'X' else 'o' if board[4] == 'O' else '' }}" {{ "disabled" if board[4] != ' ' or game_over else "" }}>{{ board[4] }}</button></td>
+            <td><button onclick="makeMove(5)" id="cell5" class="{{ 'x' if board[5] == 'X' else 'o' if board[5] == 'O' else '' }}" {{ "disabled" if board[5] != ' ' or game_over else "" }}>{{ board[5] }}</button></td>
+        </tr>
+        <tr>
+            <td><button onclick="makeMove(6)" id="cell6" class="{{ 'x' if board[6] == 'X' else 'o' if board[6] == 'O' else '' }}" {{ "disabled" if board[6] != ' ' or game_over else "" }}>{{ board[6] }}</button></td>
+            <td><button onclick="makeMove(7)" id="cell7" class="{{ 'x' if board[7] == 'X' else 'o' if board[7] == 'O' else '' }}" {{ "disabled" if board[7] != ' ' or game_over else "" }}>{{ board[7] }}</button></td>
+            <td><button onclick="makeMove(8)" id="cell8" class="{{ 'x' if board[8] == 'X' else 'o' if board[8] == 'O' else '' }}" {{ "disabled" if board[8] != ' ' or game_over else "" }}>{{ board[8] }}</button></td>
+        </tr>
+    </table>
+    
+    <a href="/reset" class="reset-button">Reset Game</a>
+    {% if game_over %}
+        <h2>Game Over</h2>
+        {% if winner %}
+            <h2>Winner: {{ winner }}</h2>
+        {% else %}
+            <h2>It's a Tie!</h2>
+        {% endif %}
+    {% endif %}
+    <script>
+        function makeMove(position) {
+            fetch('/move', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'position=' + position
+            })
+            .then(response => response.text())
+            .then(data => document.body.innerHTML = data);
+        }
+    </script>
+</body>
+</html>
